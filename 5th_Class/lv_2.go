@@ -9,11 +9,14 @@ import (
 var users = make(map[string]string,0)
 var check = make(map[string]string,0)
 func main(){
-	f1,_:=os.OpenFile("users.data",os.O_CREATE,0666)
-	d,_:=ioutil.ReadFile("user.data")
-	json.Unmarshal(d,&check)
 	r:=gin.Default()
+	f1,_:=os.OpenFile("users.data",os.O_CREATE,0666)
+	d,_:=ioutil.ReadFile("users.data")
+	json.Unmarshal(d,&check)
 	r.POST("/login",func (c *gin.Context){
+		os.OpenFile("users.data",os.O_CREATE,0666)
+		d,_:=ioutil.ReadFile("users.data")
+		json.Unmarshal(d,&check)
 		uname:=c.PostForm("username")
 		pword:=c.PostForm("password")
 	if check[uname]==pword||pword!=""{
@@ -24,11 +27,15 @@ func main(){
 	}
 	})
 	r.POST("/register",func (c *gin.Context){
+		os.OpenFile("users.data",os.O_CREATE,0666)
+		d,_:=ioutil.ReadFile("users.data")
+		json.Unmarshal(d,&check)
 		uname:=c.PostForm("username")
 		pword:=c.PostForm("password")
 		_,che:=check[uname]
 		if che {
 			c.String(403,"用户名已被注册")
+			c.Abort()
 		}
 		if len(pword)<6{
 			c.String(403,"密码不得小于六位")
