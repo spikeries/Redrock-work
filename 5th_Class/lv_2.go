@@ -11,10 +11,7 @@ var check = make(map[string]string,0)
 func main(){
 	r:=gin.Default()
 	f1,_:=os.OpenFile("users.data",os.O_CREATE,0666)
-	d,_:=ioutil.ReadFile("users.data")
-	json.Unmarshal(d,&check)
 	r.POST("/login",func (c *gin.Context){
-		os.OpenFile("users.data",os.O_CREATE,0666)
 		d,_:=ioutil.ReadFile("users.data")
 		json.Unmarshal(d,&check)
 		uname:=c.PostForm("username")
@@ -27,7 +24,6 @@ func main(){
 	}
 	})
 	r.POST("/register",func (c *gin.Context){
-		os.OpenFile("users.data",os.O_CREATE,0666)
 		d,_:=ioutil.ReadFile("users.data")
 		json.Unmarshal(d,&check)
 		uname:=c.PostForm("username")
