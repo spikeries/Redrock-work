@@ -16,7 +16,7 @@ func main(){
 		json.Unmarshal(d,&check)
 		uname:=c.PostForm("username")
 		pword:=c.PostForm("password")
-	if check[uname]==pword||pword!=""{
+	if check[uname]==pword&&pword!=""{
 		c.SetCookie("login_cookie",uname,3600,"/","",false,true)
 		c.String(200,"登录成功")
 	}else{
@@ -45,7 +45,7 @@ c.String(200,"注册成功，请重新登录。")
 
 			value,err1 := c.Cookie("login_cookie")
 			if err1!=nil {
-				c.String(403, "认证失败，妹有cookie")
+				c.String(403, "认证失败，没有cookie")
 				c.Abort()
 			
 		}

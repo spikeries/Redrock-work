@@ -10,6 +10,8 @@ import (
 
 var users = make(map[string]string,0)
 var check = make(map[string]string,0)
+
+
 func reg(){
 	f1,err1:=os.OpenFile("User.data",os.O_CREATE,0666)
 	d,_:=ioutil.ReadFile("User.data")
